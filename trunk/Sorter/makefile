@@ -1,5 +1,5 @@
 ##
-# Makefile que facilmente se adapta a qualquer tipo de exercicio
+# Sorter Makefile
 # 
 # author Vitor Carreira
 # date 2009-09-23
@@ -8,22 +8,22 @@
 # date 2009-10-28
 ##
 
-## Carrega o ficheiro de configuração
+## Loads the configuration file
 include ./configs/makefile.inc
 
-## Flags para o compilador
+## Flags to the compiler
 CFLAGS=-Wall -W -g -Wmissing-prototypes 
 
-## Flags para a indentacao de codigo 
+## Flags to code indentation
 IFLAGS=-br -brs -npsl -ce -cli4
 
-## Directórios com o código fonte do projecto
+## Directories with the project source code
 INCLUDE_DIRS=${SRC_DIR_3RD} ${SRC_DIR_INCLUDE} ${SRC_DIR} ${EXTRA_INCLUDE_DIRS}
 
-## Cria uma lista de objectos a partir dos ficheiros .c dos directórios especificados na variável INCLUDE_DIRS
+## Generates a list of objects from the .c files on the directories specified on the variable INCLUDE_DIRS
 PROGRAM_OBJS:=$(patsubst %.c,%.o,$(wildcard $(patsubst %,./%/*.c,${INCLUDE_DIRS})))
 
-## Se a variável com o ficheiro de opções estiver definida, adicionar o seu ficheiro objecto como dependência (caso não esteja já adicionada)
+## If the variable with the options file is set, add the object file as a dependency
 ifdef PROGRAM_OPT
 PROGRAM_OPT_o:=${SRC_DIR_3RD}/${PROGRAM_OPT}.o
 ifeq (,$(findstring $(PROGRAM_OPT_o),$(PROGRAM_OBJS)))
@@ -31,60 +31,60 @@ PROGRAM_OBJS:=$(PROGRAM_OBJS) $(PROGRAM_OPT_o)
 endif
 endif
 
-## Código da instrução a ser executada na solitação de parametros
+## Code to be executed to obtain the execution parameters
 ifdef params
-PARAMS=zenity --entry --title="Executar programa" --text="Introduza os parametros para o executável"
+PARAMS=zenity --entry --title="Execute program" --text="Enter the parameters to the executable"
 endif
 
-## Targets abstractos
+## Abstract Targets
 .PHONY: clean
 .PHONY: cleanall
 .PHONY: cleandocs
 .PHONY: all
 
-## Compilar com depuracao
+## Compile with depuration
 depuracao: CFLAGS += -D SHOW_DEBUG 
 depuracao: ${PROGRAM}
 
-## Constroi o executável
+## Constructs the executable
 ${PROGRAM}: ${PROGRAM_OBJS}
-	@echo "A compilar '$@':"
+	@echo "Compiling '$@':"
 	${CC} ${EXTRA_CCFLAGS} -o $@ ${PROGRAM_OBJS} ${LIBS}
 
-## Compilar .o a partir de .c
+## Compile .o from .c
 .c.o: 
-	@echo "A construir o objecto '$@':"
+	@echo "Construction the object '$@':"
 	${CC} ${CFLAGS} ${EXTRA_CCFLAGS} -c -o $@ $<
 
-## Para gerar os ficheiros do gengetopt 
+## To generate the files with gengetopt 
 ${SRC_DIR_3RD}/${PROGRAM_OPT}.h: configs/${PROGRAM_OPT}.ggo
 	gengetopt < configs/${PROGRAM_OPT}.ggo --output-dir=${SRC_DIR_3RD}/ --file-name=${PROGRAM_OPT}
 
-## Para além do target clean, limpa também os ficheiro de opções, bem como a pasta docs. Utilizar com cuidado!
+## Besides the clean target, also cleans the options files and the docs folder. Use with care!
 cleanall: clean cleandocs
 	@for d in $(INCLUDE_DIRS); do (cd $$d; rm -fv ${PROGRAM_OPT}.h ${PROGRAM_OPT}.c ); done
 
-## Limpeza dos directórios e os respectivos subdirectórios
+## Cleaning of the directories and subdirectories
 clean:
-	@for d in $(INCLUDE_DIRS); do (cd $$d; echo "A limpar o directório '$$d':"; rm -fv *.o core.* *~ ${PROGRAM} *.bak ); done
+	@for d in $(INCLUDE_DIRS); do (cd $$d; echo "Cleaning the directory '$$d':"; rm -fv *.o core.* *~ ${PROGRAM} *.bak ); done
 
-## Remove a pasta com a documentação
+## Remove the documentação folder
 cleandocs:
-	@echo "A eliminar o directório da documentação"; rm -rfv docs
+	@echo "Removing the documentation folder"; rm -rfv docs
 
-## Para documentação
+## To documentation
 docs: configs/Doxyfile
 	doxygen configs/Doxyfile
 
 configs/Doxyfile:
 	doxygen -g configs/Doxyfile
 
-## Para do Windows para o Linux
+## From Windows do Linux
 indent:
 	dos2unix *.c *.h
 	indent ${IFLAGS} *.c *.h
 
 
-## Compila e executa o programa numa janela do gnome-terminal; adicionar a definição de uma variável params=true para requisitar parâmetros ao utilizador
+## Compiles and executes the program on a gnome-terminal window; add the variable params=true to request parameters from the user
 run: all
-	@gnome-terminal  -t "Execução de ${PROGRAM}" -e "bash -c '\"./${PROGRAM}\" `${PARAMS}`; echo -e  \"\n\n\n----------------\" ; read -n1 -r -p \"Pressione uma tecla para sair...\"'"
+	@gnome-terminal  -t "Execution of ${PROGRAM}" -e "bash -c '\"./${PROGRAM}\" `${PARAMS}`; echo -e  \"\n\n\n----------------\" ; read -n1 -r -p \"Press a key to exit...\"'"

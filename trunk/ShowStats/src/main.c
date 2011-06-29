@@ -1,4 +1,8 @@
 /**
+* \mainpage
+* The ShowStats is an application to show the data from Sorter daemon using IPC. It serves a webserver to allow the statistics access with the HTTP protocol
+* 
+* 
 * @file main.c
 * @brief Main source file for the ShowStats program
 * @date 2009-10-28 File creation

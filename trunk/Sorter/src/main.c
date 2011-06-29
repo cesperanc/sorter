@@ -1,4 +1,8 @@
 /**
+* \mainpage
+* The Sorter is an application to sort data files using various algorithms
+* 
+* 
 * @file main.c
 * @brief Main source file for the Sorter program
 * @date 2009-10-28 File creation
