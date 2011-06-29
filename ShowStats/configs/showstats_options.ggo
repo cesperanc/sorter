@@ -1,0 +1,10 @@
+# showstats_options.ggo
+# gengetopt configuration file for the Sorter program
+
+purpose "This program show you the statistical data from the sorter program."
+package "ShowStats"
+version "1.0"
+# Options
+option "id"				i	"Filename to the sorter executable"						string		required																	typestr="<filename>"
+option "export"			e	"Filename to register statistics results"				string		optional																	typestr="<filename>"
+option "http"			-	"The TCP port to listen for HTTP connections"			int			optional																	typestr="<port>"
