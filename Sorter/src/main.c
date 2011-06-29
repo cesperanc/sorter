@@ -65,34 +65,43 @@ int main(int argc, char *argv[]){
 	// Initializes the command line parser and check for the application parameters
 	if (cmdline_parser(argc,argv,&args_info) != 0){
 		DEBUG("\nInvalid parameters");
-		exit(M_INVALID_PARAMETERS);
+		result = M_INVALID_PARAMETERS;
 	}
-
-	// Remove the duplicated algorithms given by the program arguments
-	remove_duplicated_algorithms(&args_info);
-
-	// Enable daemon mode if the flag was sent
-	daemonize(args_info);
-
-	// Enable log mode if the parameter was sent
-	log_file=lognize(args_info);
-
-	// Register the signal handler
-	register_signal_handlers();
-
-	// print the header message
-	print_log_header(args_info, argc, argv);
-
-
-	// Let's process the directory
-	if((result = processDir(args_info, argc, argv))!=TRUE){
-		printf("\nThe processing failed with the error %d\n",result);
-		result = M_PROCESSING_FAILED;
+	
+	// Check the number of files on the directory
+	if(result == 0 && count_dir_items(args_info.input_arg)<=0){
+		DEBUG("\nNo files found to sort");
+		result = M_NUMBER_OF_FILES;
 	}
+	
+	// If no error occurred
+	if(result == 0){
+		// Remove the duplicated algorithms given by the program arguments
+		remove_duplicated_algorithms(&args_info);
 
-	// If we are logging to a file, let's restore the default behavior
-	if (args_info.log_given && log_file!=NULL){
-		close_log_file(log_file);
+		// Enable daemon mode if the flag was sent
+		daemonize(args_info);
+
+		// Enable log mode if the parameter was sent
+		log_file=lognize(args_info);
+
+		// Register the signal handler
+		register_signal_handlers();
+
+		// print the header message
+		print_log_header(args_info, argc, argv);
+
+
+		// Let's process the directory
+		if((result = processDir(args_info, argc, argv))!=TRUE){
+			printf("\nThe processing failed with the error %d\n",result);
+			result = M_PROCESSING_FAILED;
+		}
+
+		// If we are logging to a file, let's restore the default behavior
+		if (args_info.log_given && log_file!=NULL){
+			close_log_file(log_file);
+		}
 	}
 
 	// Free the command line parser memory
@@ -118,6 +127,7 @@ void print_log_header(struct gengetopt_args_info args_info, int argc, char *argv
 	for(a=1;a<argc;a++){
 		printf("%s ",argv[a]);
 	}
+	
 	//Print the date
 	aux = get_current_time("@%Y-%m-%d %Hh%M", strlen("@2009-10-09 15h30"));
 	printf("\n# start date: %s\n",aux);
