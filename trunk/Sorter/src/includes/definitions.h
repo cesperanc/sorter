@@ -405,4 +405,9 @@
  */
 #define M_PTHREAD_CREATE_FAILED 60
 
+/**
+ * Define the exit value for the minimum number of files error
+ */
+#define M_NUMBER_OF_FILES 61
+
 #endif /* DEFINITIONS_H_ */
