@@ -1,4 +1,8 @@
 /**
+* \mainpage
+* The UdpTime is an application serve the time using UDP
+* 
+* 
 * @file main.c
 * @brief Main source file for the UdpTime program
 * @date 2009-12-10 File creation
