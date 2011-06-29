@@ -1,0 +1,26 @@
+# sorter_options.ggo
+# gengetopt configuration file for the Sorter program
+
+purpose "This program lets you sort text files."
+package "Sorter"
+version "1.0"
+
+# Default options
+option "input"					i	"Folder with the files to sort"								string		required																		typestr="<folder>"
+option "output"					o	"Folder to put the sorted files"							string		required																		typestr="<folder>" 
+option "serial-algorithm"		a	"Algorithms to use in the sort process"						enum		required 	multiple(1-4)	values="bubble","merge","quick","shell"				typestr="<algorithm>"
+
+# Daemon options
+defmode "Daemon"
+modeoption "log"				l	"Filename to log the messages"								string		mode="Daemon"	 		yes														typestr="<filename>"
+modeoption "daemon"				d	"Use program as a daemon"									flag 		mode="Daemon" 			off
+
+# UDP time options
+defmode "UDP time"
+modeoption "time-server-addr"	s	"IP address of the UDP time server"							string		mode="UDP time"		 	yes														typestr="<ipaddress>"
+modeoption "time-server-port"	p	"The port of the UDP time server"							int 		mode="UDP time" 		yes														typestr="<portnumber>"
+
+# UDP stats server options
+defmode "UDP report"
+modeoption "stats-server"		-	"IP address of the UDP server to publish the results"		string		mode="UDP report"	 	yes														typestr="<ipaddress>"
+modeoption "stats-port"			-	"The port of the UDP server to publish the results"			int 		mode="UDP report" 		yes														typestr="<portnumber>"

@@ -1,0 +1,45 @@
+/**
+* @file aux_fork.txt
+* @brief Ficheiro com código para utilizar sempre que for utilizada a função fork
+* @date 07-04-2006
+* @author rui@estg.ipleiria.pt
+*/
+
+
+/* ************** VERSÃO:  SWITCH  *****************************  */
+	pid_t pid;
+	
+	pid = fork ();
+	switch (pid) 
+	{
+	    case -1:		/* erro */
+		    ERROR (1, "Erro na execucao do fork()");
+		    break;
+
+	    case 0:		/* filho */
+	    
+		    break;
+	
+	    default:		/* pai */
+
+		    break;
+	}
+
+
+
+/* ********************  VERSÃO:  IF  **************************  */
+	pid_t pid;
+
+	pid = fork ();
+	if (pid == 0) 
+	{		/* Processo filho */
+
+	} 
+	else if (pid > 0) 
+	{	/* Processo pai */
+
+	} 
+	else	/* < 0 - erro */
+		ERROR (1, "Erro na execucao do fork()");
+
+
