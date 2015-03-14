@@ -10,17 +10,17 @@ The applications were written on C code and designed to run on a Linux machine.
 
 # Screenshots #
 ## Sorter ##
-<img src='http://sorter.googlecode.com/svn/wiki/images/sorter.png' alt='Image of the sorter running on the console' title='Image of the sorter running on the console' />
+![Image of the sorter running on the console](https://github.com/cesperanc/sorter/raw/wiki/images/sorter.png)
 
 ## UdpTime ##
-<img src='http://sorter.googlecode.com/svn/wiki/images/udptime.png' alt='Image of the UdpTime server running on the console' title='Image of the UdpTime server running on the console' />
+![Image of the UdpTime server running on the console](https://github.com/cesperanc/sorter/raw/wiki/images/udptime.png)
 
 ## ShowStats ##
 Image of the ShowStats running on the console:
 
-<img src='http://sorter.googlecode.com/svn/wiki/images/showstats1.png' alt='Image of the ShowStats running on the console' title='Image of the ShowStats running on the console' />
+![Image of the ShowStats running on the console](https://github.com/cesperanc/sorter/raw/wiki/images/showstats1.png)
 
 
 Image of a browser connected to the ShowStats:
 
-<img src='http://sorter.googlecode.com/svn/wiki/images/showstats2.png' alt='Image of a browser connected to the ShowStats' title='Image of a browser connected to the ShowStats' />
+![Image of a browser connected to the ShowStats](https://github.com/cesperanc/sorter/raw/wiki/images/showstats2.png)
